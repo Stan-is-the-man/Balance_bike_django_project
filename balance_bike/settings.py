@@ -3,8 +3,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-%eo_ih6(vo0m4c@oq5srw#$#0p=kv7o&__g38tm6-c35ey^u=m'
@@ -42,8 +40,7 @@ ROOT_URLCONF = 'balance_bike.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -51,6 +48,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 'django.contrib.humanize',
             ],
         },
     },
@@ -64,7 +62,7 @@ WSGI_APPLICATION = 'balance_bike.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'balance_bike_db',
+        'NAME': 'balance_bike_db_new_copy1',
         'USER': 'postgres',
         'PASSWORD': '1123QwER',
         'HOST': '127.0.0.1',
@@ -114,3 +112,5 @@ MEDIA_ROOT = BASE_DIR / 'media_files'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'web.Customer'

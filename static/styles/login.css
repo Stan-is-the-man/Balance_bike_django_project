@@ -24,7 +24,8 @@
 }
 
 .login-register-box label {
-	display: none;
+	display:block;
+	color:saddlebrown;
 }
 
 .login-register-box input {

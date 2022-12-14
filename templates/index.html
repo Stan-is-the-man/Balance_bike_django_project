@@ -3,14 +3,67 @@
 
 {% block content %}
 
-<!-- headlines -->
-    <section id="index-headline">
-        <div class="index-message">
-            <h2>Handcrafted <span>Wooden
-            </span>balance bikes</h2>
-        </div>
-        <img src="{% static 'images/bike_specs.jpg' %}" alt="balance bike">
-    </section>
+    <style>
+        .mySlides {
+            display: none;
+        }
+    </style>
+    <body>
+
+    <h4 class="w3-center">КОЛЕЛА ЗА БАЛАНС РЪЧНА ИЗРАБОТКА</h4>
+
+    <div class="w3-content w3-display-container">
+        <a href="{% url 'catalogue' %}">
+            <img class="mySlides" src="{% static 'images/bike_specs - cut.jpg' %}" alt="balance bike"
+                 style="width:100% "></a>
+        <a href="{% url 'catalogue' %}">
+            <img class="mySlides" src="{% static 'images/blue_bike - cut.jpg' %}" alt="balance bike"
+                 style="width:100% "></a>
+        <a href="{% url 'catalogue' %}">
+            <img class="mySlides" src="{% static 'images/pink_bike_cut.jpg' %}" alt="balance bike" style="width:100% "></a>
+
+
+        <a href="{% url 'catalogue' %}">
+            <img class="mySlides" src="{% static 'images/blue_2.jpg' %}" alt="balance bike" style="width:100%"></a>
+        <a href="{% url 'catalogue' %}">
+            <img class="mySlides" src="{% static 'images/pink_1.jpg' %}" alt="balance bike" style="width:100%"></a>
+        <a href="{% url 'catalogue' %}">
+            <img class="mySlides" src="{% static 'images/bike_mountain_1.jpg' %}" alt="balance bike" style="width:100%"></a>
+        <a href="{% url 'catalogue' %}">
+            <img class="mySlides" src="{% static 'images/bike_dog.jpg' %}" alt="balance bike" style="width:100%"></a>
+        <a href="{% url 'catalogue' %}">
+            <img class="mySlides" src="{% static 'images/manifacturing_me.jpeg' %}" alt="balance bike"
+                 style="width:100%"></a>
+
+        <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+        <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+    </div>
+
+    <script>
+        let slideIndex = 1;
+        showDivs(slideIndex);
+
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            if (n > x.length) {
+                slideIndex = 1
+            }
+            if (n < 1) {
+                slideIndex = x.length
+            }
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            x[slideIndex - 1].style.display = "block";
+        }
+    </script>
+
+    </body>
 
 {% endblock %}
 

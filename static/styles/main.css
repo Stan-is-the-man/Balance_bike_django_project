@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+
 html {
     font-family: Arial, sans-serif;
     font-size: 16px;
@@ -27,6 +28,11 @@ h6 {
 p,
 div {
     margin: 0 1em 0.5em 1em;
+    color: saddlebrown;
+    font-family: cursive;
+    /*font-size: larger;*/
+
+
 }
 
 ol,
@@ -36,6 +42,8 @@ ul {
 
 li {
     list-style-position: inside;
+    font-family: cursive;
+    color: black;
 }
 
 button {
@@ -48,7 +56,7 @@ button {
 }
 
 a {
-    margin: 0.2em;
+    margin: 2em;
     text-decoration: none;
     font-weight: bold;
     color: inherit;
@@ -73,18 +81,18 @@ a {
     width: 30%
 }
 
-.index-message>h2{
+.index-message > h2 {
     position: relative;
     font-size: 50px;
     left: 180px;
     top: 20px;
 }
 
-#index-headline>img {
+#index-headline > img {
     height: auto;
     display: inline-block;
     vertical-align: middle;
-    max-width: 50%;
+    max-width: 60%;
     margin-left: auto;
 }
 
@@ -101,11 +109,11 @@ a {
     font-family: 'Monoton', cursive;
 }
 
-.index-message h2>span {
+.index-message h2 > span {
     color: #3387C7;
 }
 
-#catalogue>h1{
+#catalogue > h1 {
     text-align: center;
     color: #134062;
     text-transform: uppercase;
@@ -121,35 +129,36 @@ a {
     border: 1px solid rgba(255, 255, 255, 0.18);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
     margin-top: 20px;
-    padding: 50px;
-    margin-left: 50px;
+    padding: 35px;
+    margin-left: 140px;
     background-position: right 35% bottom 45%;
     box-sizing: border-box;
-    border-radius: 15px;
+    border-radius: 5px;
     float: left;
     height: auto;
 }
 
 .image-wrap {
-    width: 250px;
-    height: 250px;
+    width: 350px;
+    height: 350px;
     display: inline-block;
-    border-radius: 50%;
+    /*border-radius: 0;*/
     overflow: hidden;
     position: relative;
     text-align: center;
 }
 
-.image-wrap>img {
+.image-wrap > img {
     max-width: 100%;
     height: 100%;
 }
 
-.details-buttons{
+.details-buttons {
     text-align: center;
     margin-top: 50px;
 }
-.details-btn{
+
+.details-btn {
     color: #fff;
     border: none;
     margin: 20px;
@@ -158,23 +167,24 @@ a {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 4px;
-    cursive: pointer;
+    /*cursive: pointer;*/
     border-radius: 20px;
     transition: 0.5s;
     transition-property: box-shadow;
 }
 
-.details-btn{
+.details-btn {
     background: #3387C7;
     box-shadow: 0 0 25px white;
 }
 
-.details-btn:hover{
+.details-btn:hover {
     box-shadow: 0 0 100px white;
 }
-.car-card>h3 {
-    font-family: "Agency FB", serif;
-    font-size: 42px;
+
+.car-card > h3 {
+    font-family: "Bodoni MT", serif;
+    font-size: 32px;
     font-weight: 700;
     line-height: normal;
     width: 100%;
@@ -182,21 +192,21 @@ a {
     text-overflow: ellipsis;
     transition: all 0.5s ease-out;
     text-align: center;
-    text-transform: uppercase;
-}
-.car-card>h3,
-.car-card>h1{
-    color: #E2E8EA;
-    text-align: center;
 }
 
-.car-card>h1{
-    font-size: 15px;
+.car-card > h3,
+.car-card > h1 {
+    color: darkslategrey;
+    text-align: -webkit-center;
+    font-family: serif;
+}
+
+.car-card > h1 {
+    font-size: 25px;
 }
 
 
-
-#home-page>h1 {
+#home-page > h1 {
     color: rgb(252, 168, 151);
     text-align: center;
     font-weight: 700;
@@ -205,9 +215,9 @@ a {
 }
 
 .no-articles {
-    color: white;
+    color: orangered;
     text-align: center;
     font-weight: 700;
-    font-size: 60px;
+    font-size: 20px;
     font-family: "Agency FB", serif;
 }

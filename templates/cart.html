@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div>
+        {% if cart_products %}
+            <section class="py-5">
+                <h2 class="h5 text-uppercase mb-4">МОЯТА КОЛИЧКА</h2>
+                <div class="row">
+                    <div class="col-lg-8 mb-4 mb-lg-0">
+                        <div class="">
+                            <table class="table">
+                                <thead class="bg-light">
+                                <tr>
+                                    <th class="border-0" scope="col"><strong
+                                            class="text-small text-uppercase">Продукт:</strong></th>
+                                    <th class="border-0" scope="col"><strong
+                                            class="text-small text-uppercase">Цена:</strong></th>
+                                    <th class="border-0" scope="col"><strong class="text-small text-uppercase">Количество:</strong>
+                                    </th>
+                                    <th class="border-0" scope="col"><strong class="text-small text-uppercase">Обща
+                                        сума:</strong></th>
+                                    <th class="border-0" scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <!--Current bike info-->
+                                {% for cart_product in cart_products %}
+                                    <tr>
+                                        <!-- PRODUCT IMAGE-->
+
+                                        <th class="pl-0 border-0" scope="row">
+
+                                            <div class="">
+                                                <a class="reset-anchor d-block animsition-link">
+                                                    <img src="{{ cart_product.product.image.url }}"
+                                                         alt="{{ cart_product.product.color }} цвят" width="70"/>
+                                                </a>
+
+                                                <div class="media-body ml-3"><strong class="h6">
+                                                    <a class="reset-anchor animsition-link">
+                                                        Цвят:{{ cart_product.product.color }}
+                                                    </a></strong>
+                                                </div>
+                                            </div>
+                                        </th>
+
+
+                                        <td class="align-middle border-0">
+                                            <p class="mb-0 small">{{ cart_product.product.price|floatformat:2 }}лв.</p>
+                                        </td>
+
+
+                                        <td class="align-middle border-0">
+                                            <div class="border d-flex align-items-center justify-content-between px-3">
+                                                <span class="small text-uppercase text-gray headings-font-family">Количество</span>
+
+                                                <!--  QUANTITY: + and - for quantity -->
+                                                <div class="quantity">
+                                                    <a href="{% url 'minus cart' cart_product.id %}"
+                                                       class="dec-btn p-0 ml-2"><i class="fas fa-minus"></i></a>
+
+                                                    <label>
+                                                        <input class="form-control form-control-sm border-0 shadow-0 p-0"
+                                                               type="text" value="{{ cart_product.quantity }}"/>
+                                                    </label>
+
+                                                    <a href="{% url 'plus cart' cart_product.id %}" class="inc-btn p-0"><i
+                                                            class="fas fa-plus"></i></a>
+                                                </div>
+                                                <!--  END QUANTITY: + and - for quantity -->
+
+
+                                            </div>
+                                        </td>
+
+                                        <td class="align-middle border-0">
+                                            <p class="mb-0 small">{{ cart_product.total_price|floatformat:2 }}лв.</p>
+                                        </td>
+
+                                        <!-- REMOVING THE CART-->
+                                        <td class="align-middle border-0">
+                                            <a class="reset-anchor"
+                                               href="{% url 'remove-cart' cart_product.id %}">
+                                                <i class="fas fa-trash-alt small text-muted"></i>
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <!-- ORDER TOTAL-->
+                        <div class="">
+                            <div class="card border-0 rounded-0 p-lg-4 bg-light">
+                                <div class="card-body">
+                                    <h5 class="text-uppercase mb-4">Тотал</h5>
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="d-flex align-items-center justify-content-between"><strong
+                                                class="text-uppercase small font-weight-bold">Тотал
+                                            поръчка</strong><span
+                                                class="text-muted small">{{ amount|floatformat:2 }}лв.</span></li>
+                                        <li class="d-flex align-items-center justify-content-between"><strong
+                                                class="text-uppercase small font-weight-bold">Доставка</strong><span
+                                                class="text-muted small">+ &nbsp&nbsp{{ shipping_amount|floatformat:2 }} лв</span>
+                                        </li>
+                                        <li class="border-bottom my-2"></li>
+                                        <li class="d-flex align-items-center justify-content-between mb-4"><strong
+                                                class="text-uppercase small font-weight-bold">Обща сума за
+                                            плащане</strong><span>{{ total_amount|floatformat:2 }}лв.</span></li>
+                                        <li>
+                                        </li>
+                                    </ul>
+
+
+
+                                    {% if not addresses %}
+                                        <div class="">
+
+                                            <a class="btn btn-link p-0 text-dark btn-sm"
+                                               href="{% url 'catalogue' %}"><i
+                                                    class="fas fa-long-arrow-alt-left mr-2"> </i>Продължи да
+                                                пазаруваш</a>
+                                            <a class="btn btn-link p-0 text-dark btn-sm"
+                                               href="{% url 'add address' %}"><i
+                                                    class="fas fa-long-arrow-alt-left mr-2"> </i>Добави информация за
+                                                доставка</a>
+
+
+                                        </div>
+                                        </div>
+                                    {% endif %}
+
+                                  <!-- Checkout with cash on delivery -->
+                                <form action="{% url 'order summary' %}" id="myform">
+                                    {% if addresses %}
+                                        <button type="submit" class="btn btn-outline-primary btn-large"><i
+                                                class=""></i>Прегледай и завърши
+                                        </button>
+                                    {% endif %}
+                                </form>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        {% else %}
+
+            <div class="text-center py-5">
+                <h3 class="mb-3">Количката Ви е празна.</h3>
+                <a href="{% url 'catalogue' %}"><i class="fas fa-long-arrow-alt-left mr-2"> </i>Продължи с пазаруването</a>
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+{% endblock %}

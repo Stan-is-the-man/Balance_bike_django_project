@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container py-5">
+        <div class="col-md-8 offset-2">
+
+            <h1 class="mb-5">Информация за доставката</h1>
+            <div class="card-body">
+
+                <form method="post" action="{% url 'add address' %}">
+                    {% csrf_token %}
+                    {{ form }}
+
+                    <button class="btn btn-primary" type="submit">Добави информацията</button>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock content %}

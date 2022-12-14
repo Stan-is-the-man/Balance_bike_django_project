@@ -1,60 +1,21 @@
 {% extends 'base.html' %}
-{% load custom_tags %}
-
 {% block content %}
 
-    <!-- Start Register Section -->
     <div class="login-register-div">
         <div class="login-register-box">
             <h1>Регистрационна форма</h1>
 
-            <!-- Start Register Form -->
             <form method="post" action="{% url 'signup' %}">
-
-                {{ form.username|placeholder:'Потребителско име' }}
-                {{ form.username.errors }}
-
-                {{ form.first_name|placeholder:'Име' }}
-                {{ form.first_name.errors }}
-
-                {{ form.last_name|placeholder:'Фамилия' }}
-                {{ form.last_name.errors }}
-
-{#                {{ form.phone|placeholder:'Тел. номер' }}#}
-{#                {{ form.phone.errors }}#}
-{##}
-{#                {{ form.city|placeholder:'Населено място' }}#}
-{#                {{ form.city.errors }}#}
-{##}
-{#                {{ form.address|placeholder:'Адрес за доставка' }}#}
-{#                {{ form.address.errors }}#}
-
-                {{ form.email|placeholder:'Имейл' }}
-                {{ form.email.errors }}
-
-                {{ form.password1|placeholder:'Парола' }}
-                {{ form.password1.errors }}
-
-                {{ form.password2|placeholder:'Повтори паролата' }}
-                {{ form.password2.errors }}
-
+                {{ form }}
                 {% csrf_token %}
                 <button type="submit">Регистрация</button>
             </form>
-
-
-            <!-- End Register Form -->
-
         </div>
-        <div class="second-option">
 
-            <!-- Link to Login Page -->
-{#            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#}
-            <p>Вече си регистриран? <a href="#">Вход</a></p>
+
+        <div class="second-option">
+            <p>Вече сте регистриран/а? <a href="{% url 'login' %}">Вход</a></p>
         </div>
     </div>
-    <!-- End Register Section -->
-
-
 
 {% endblock %}

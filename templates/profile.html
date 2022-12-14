@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container py-5">
+        <div class="col-lg-10">
+            <div class="card mb-4" id="headings">
+
+                <h1>Вашият профил:</h1>
+                {% if request.user.first_name and request.user.last_name %}
+                    <p><strong>Име и фамилия:</strong> {{ request.user.first_name }} {{ request.user.last_name }}</p>
+                {% endif %}
+                <p><strong>Потребител:</strong> {{ request.user.username }}</p>
+                <p><strong>Имейл:</strong> {{ request.user.email }}</p>
+                {% if request.user.phone %}
+                    <p><strong>Телефон:</strong> {{ request.user.phone }}</p>
+                {% endif %}
+                {#            <a class="btn btn-outline-primary btn-large" href="{% url 'orders' %}">Моите поръчки »</a>#}
+                <a class="btn btn-outline-primary btn-large"
+                   href="{% url 'user edit' pk=request.user.pk %}">Редакция</a>
+                {#            </p>#}
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-10">
+                <div class="card mb-4" id="headings">
+                    <div class="card-header">Адрес
+                        {% if not addresses %}
+                            <p><a class="btn btn-primary btn-large" href="{% url 'add address' %}">Добави адрес</a>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        {% if addresses %}
+                            {% for address in addresses %}
+                                <h4 class="mb-3">Информация за доставка:</h4>
+
+                                <span class="float-right"><a href="{% url 'remove address' address.id %}"><i
+                                        class="fas fa-trash-alt small text-muted"></i></a></span>
+
+                                <p>
+
+                                    <strong>Град: </strong>{{ address.city }} <br>
+                                    <strong>Улица(квартал), номер, вход: </strong>{{ address.street }} <br>
+                                    <strong>Име на получател: </strong>{{ address.first_name }} <br>
+                                    <strong>Фамилия на получател: </strong>{{ address.last_name }} <br>
+                                    <strong>Телефон: </strong>{{ address.phone }} <br>
+                                    {% if address.name_for_engraving %}
+                                        <strong>ИМЕ за гравиране: </strong>{{ address.name_for_engraving }} <br>
+                                    {% else %}
+                                        <strong>ИМЕ за гравиране: </strong> Без име загравиране <br>
+                                    {% endif %}
+                                </p>
+
+                                <hr>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-danger">
+                                Нямате добавен адрес.
+                            </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-10">
+                <div class="card mb-4" id="tables">
+                    <div class="card-header">Поръчки</div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Артикул</th>
+                                <th>Статус на поръчка</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% if orders %}
+                                {% for order in orders %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ order.product.bike_name }}</td>
+                                        <td>
+                                            {{ order.status }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td class="text-danger" colspan="3">Нямате поръчки.</td>
+                                </tr>
+                            {% endif %}
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+{% endblock content %}

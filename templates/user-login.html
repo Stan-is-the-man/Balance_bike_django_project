@@ -1,31 +1,23 @@
 {% extends 'base.html' %}
-
 {% block content %}
 
-        <!-- Start Login Section-->
     <div class="login-register-div">
         <div class="login-register-box">
             <h1>Вход в Yomax Bikes</h1>
 
-            <!-- Start Login Form-->
             <form method='post' action="{% url 'login' %}">
-                {{ form }}
+                {{ form.as_p }}
                 {% csrf_token %}
-
-                <!-- Login Button-->
                 <button type="submit">Вход</button>
             </form>
-            <!-- End Login Form -->
-
         </div>
-        <div class="second-option">
 
-            <!-- Link to Register Page-->
-            <p>Don't have account? <a href="{% url 'signup' %}">Регистрация</a></p>
+
+        <div class="second-option">
+            <p>
+                <a href="{% url 'signup' %}">ИЛИ СЕ РЕГИСТРИРАЙ ТУК.</a>
+            </p>
         </div>
     </div>
-    <!-- End Login Section-->
-
-
 
 {% endblock %}

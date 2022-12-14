@@ -1,0 +1,100 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index' %}">Yomax Bikes</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Начало</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'catalogue' %}">Каталог</a>
+                </li>
+
+
+
+
+                {% if not request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Вход</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'signup' %}">Регистрация</a>
+                    </li>
+
+
+                {% elif request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'cart' %}">Кoличка</a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Изход</a>
+                    </li>
+
+
+
+
+
+
+
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+
+                            Моят Акаунт
+                        </a>
+                        <ul class="dropdown-menu">
+
+                            {% if request.user.is_authenticated %}
+
+                                <li><a class="dropdown-item" href="{% url 'orders' %}">Моите поръчки</a></li>
+                                <li><a class="dropdown-item" href="{% url 'profile' %}">Профил</a></li>
+                                <li><a class="dropdown-item" href="{% url 'user edit' pk=request.user.pk %}">Редактирай
+                                    профил</a></li>
+                                <li><a class="dropdown-item" href="{% url 'password-change' %}">Смени парола</a>
+                                </li>
+                                <li><a class="dropdown-item" href="{% url 'user delete' pk=request.user.pk %}">Изтрий
+                                    профил</a></li>
+
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">Изход</a>
+
+
+                            {% endif %}
+
+                            </li>
+                        </ul>
+                    </li>
+
+
+
+
+                {% endif %}
+
+
+                <!-- Dropdown Menu-->
+
+                {#                <li class="nav-item">#}
+                {#                    <a class="nav-link disabled">Disabled</a>#}
+                {#                </li>#}
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+

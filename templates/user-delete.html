@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <div class="container py-5">
+        <div class="col-lg-10">
+            <div class="card mb-4" id="headings">
+
+                <div class="delete-profile">
+                    <h1>
+                        Сигурни ли сте, че искате да изтриете акаунта си?
+                    </h1>
+
+                    <div class="sure-buttons">
+                        <form method="post" action="{% url 'user delete' pk=request.user.pk %}">
+                            <button class="edit-button">Да</button>
+                            {% csrf_token %}
+                            <a class="edit-button" href="javascript:history.back()">Назад</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

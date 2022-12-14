@@ -6,60 +6,79 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!--Index Slideshow-->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+
+    <!-- Custom file CSS -->
+    <link rel="stylesheet" href="../static/styles/custom.css">
+
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="{% static 'styles/style.css' %}"/>
     <script src="https://kit.fontawesome.com/3af1e9262c.js" crossorigin="anonymous"></script>
+
+    <!--JS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+    <!-- Lightbox-->
+    <link rel="stylesheet" href="{% static 'vendor/lightbox2/css/lightbox.min.css' %}">
+    <!-- Range slider-->
+    <link rel="stylesheet" href="{% static 'vendor/nouislider/nouislider.min.css' %}">
+    <!-- Bootstrap select-->
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-select/css/bootstrap-select.min.css' %}">
+    <!-- Owl Carousel-->
+    <link rel="stylesheet" href="{% static 'vendor/owl.carousel2/assets/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/owl.carousel2/assets/owl.theme.default.css' %}">
+    <!-- Google fonts-->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;700&amp;display=swap">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Martel+Sans:wght@300;400;800&amp;display=swap">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="{% static 'styles/style.default.css' %}" id="theme-stylesheet">
+    <!-- Custom stylesheet - for my changes-->
+    <link rel="stylesheet" href="{% static 'styles/custom.css' %}">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static 'images/logo.jpg' %}">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+
+    <!-- My custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/custom.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/footer.css' %}">
+
     <title>Yomax Bikes</title>
 </head>
+
+
 <body>
 
-<div>
-    <header>
-        <!-- Navigation Bar -->
-        <h1><a class="index-navigation" href="{% url 'index' %}"><span>Y</span>OMAX
-            <span>B</span>IKES <span></span></a>
-        </h1>
+<div class="page-holder">
 
-        <nav>
-            <a href="{% url 'index' %}">Начало</a>
-            <a href="#">Каталог</a>
-
-            {% if request.user.is_authenticated %}
-                <a href="#">Редактирай профил</a>
-                <a href="{% url 'logout' %}">Изход</a>
-
-            {% else %}
-                <a href="{% url 'login' %}">Вход</a>
-                <a href="{% url 'signup' %}">Регистрация</a>
-
-            {% endif %}
-
-        </nav>
-    </header>
-
+    {% include 'navbar.html' %}
 
     {% block content %}
     {% endblock %}
 
-
-
-    <footer>
-        <article>
-            &copy; Yomax Bikes. Всички права запазени.
-        </article>
-
-        <article>
-            <a href="https://www.facebook.com/yomaxbike">
-                <i class="fa-brands fa-square-facebook"> Facebook</i>
-            </a>
-
-            <a href="https://www.instagram.com/yomaxbike/?hl=bg">
-                <i class="fa-brands fa-square-facebook"> Instagram</i>
-            </a>
-
-
-        </article>
-
-    </footer>
+    {% include 'footer.html' %}
 </div>
 
 </body>

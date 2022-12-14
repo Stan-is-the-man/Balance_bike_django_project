@@ -1,0 +1,10 @@
+p {
+    color: darkcyan;
+    margin-top: 1rem;
+    margin-bottom: 0;
+    font-size: larger;
+}
+
+section {
+    padding: 0 22rem;
+}

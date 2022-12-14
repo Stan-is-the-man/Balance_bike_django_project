@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    {% for bike in bikes %}
+        <div class="car-card">
+            <div class="image-wrap">
+
+                <!-- bike image -->
+                <img src="{{ bike.image.url }}"
+                     alt="{{ bike.color }}"
+                     enctype="multipart/form-data">
+            </div>
+                <!-- bike specs-->
+            <ul>
+                <li>
+                    <strong>ЦВЯТ : </strong>{{ bike.color }}
+                </li>
+                <li>
+                    <strong>МОДЕЛ : </strong>{{ bike.model }}
+                </li>
+                <li>
+                    <strong>ЦЕНА : </strong>{{ bike.price|floatformat:2 }} лв.
+                </li>
+            </ul>
+
+            <!-- free shipping or sold out -->
+            {% if bike.quantity_available < 1 %}
+                <h2>Изчерпано количество</h2>
+            {% elif bike.quantity_available >= 1 %}
+                <h4>&nbsp&nbsp&nbsp&nbsp&nbsp Безплатна доставка</h4>
+                <h4>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp с наложен платеж</h4>
+            {% endif %}
+
+
+            <!--add to cart-->
+            {% if bike.quantity_available > 0 %}
+                <div class="col-sm-3 pl-sm-0">
+
+                    {% if request.user.is_authenticated %}
+                        <form action="{% url 'add to cart' product_pk=bike.pk %}" method="post">
+                            {#                            <input type="hidden" name="prod_id" value="{{ bike.id }}" id="bike_id">#}
+                            {% csrf_token %}
+                            <button type="submit"
+                                    class="btn btn-dark btn-lg btn-block h-100 d-flex align-items-center justify-content-center px-0">
+                                Добави в количка
+                            </button>
+                        </form>
+
+                    {% elif not request.user.is_authenticated %}:
+                        <form action="{% url 'login' %}">
+                            <button type="submit"
+                                    class="btn btn-dark btn-lg btn-block h-100 d-flex align-items-center justify-content-center px-0">
+                                Вход в профил
+                            </button>
+                        </form>
+
+                    {% endif %}
+                </div>
+            {% endif %}
+
+
+        </div>
+    {% endfor %}
+
+{% endblock %}
