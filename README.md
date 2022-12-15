@@ -23,9 +23,9 @@ The product develops the balance and coordination of the child, which make the t
   - See the order status and history
   - Update Profile or Password
 
-  Owner (superuser status) can  :
-      - manage products, users, orders (Create, View, Update and Delete)
+  Owner (superuser status) can:
+  - manage products, users, orders (Create, View, Update and Delete)
       
   Employee (staff) can:
-      - manage just orders (Create, View, Update and Delete)
-      - just view products, users and addresses.
+  - manage just orders (Create, View, Update and Delete)
+  - view products, users and addresses.
