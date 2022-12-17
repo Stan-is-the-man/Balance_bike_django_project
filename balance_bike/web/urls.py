@@ -4,7 +4,7 @@ from django.urls import path
 from balance_bike.web.forms import PasswordChanging
 from balance_bike.web.views import IndexView, UserSignUpView, UserLoginView, UserLogoutView, BikesListView, \
     UserEditView, UserDeleteView, cart, checkout, add_to_cart, plus_cart, minus_cart, orders, remove_cart, \
-    profile, remove_address, order_summary, contacts, AddressView
+    profile, remove_address, order_summary, contacts, AddressView, address_edit
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
@@ -27,6 +27,7 @@ urlpatterns = [
     # Address
     path('add-address/', AddressView.as_view(), name='add address'),
     path('remove-address/<int:id>/', remove_address, name='remove address'),
+    path('edit-address/<int:id>/', address_edit, name='edit address'),
 
     # Cart
     path('cart/', cart, name='cart'),

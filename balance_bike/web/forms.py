@@ -75,8 +75,8 @@ class UserEditForm(UserChangeForm):
         label=_("Потребителска парола"),
         help_text=_(
             "За промяна на паролата Ви, "
-            "моля ползвайте менюто Моя Акаунт -> СМЯНА НА ПАРОЛА"
-            # '<a href="{}">Смяна на потребителска парола</a>.'
+            "моля ползвайте менюто Моя Акаунт -> СМЕНИ ПАРОЛА"
+
         ),
     )
 
@@ -101,9 +101,15 @@ class AddressForm(forms.ModelForm):
             'phone': forms.TextInput(
                 attrs={'class': 'form-control', 'placeholder': 'За телефонен номер въведете точно 10 цифри'}),
             'name_for_engraving': forms.TextInput(
-                attrs={'class': 'form-control', 'placeholder': 'МОЛЯ ВЪВЕДЕТЕ ИМЕ/НА ЗА ГРАВИРАНЕ (МАКС. 10 СИМВОЛА)'}),
+                attrs={'class': 'form-control', 'placeholder': 'МОЛЯ ВЪВЕДЕТЕ ИМЕ/НА ЗА ГРАВИРАНЕ (МАКС. 20 СИМВОЛА)'}),
 
         }
+
+
+class EditAddressForm(forms.ModelForm):
+    class Meta:
+        model = Address
+        fields = ['city', 'street', 'first_name', 'last_name', 'phone', 'name_for_engraving']
 
 
 class PasswordChanging(PasswordChangeForm):

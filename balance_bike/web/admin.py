@@ -9,6 +9,7 @@ from balance_bike.web.models import BalanceBike, Customer, Address, Order, Cart
 @admin.register(BalanceBike)
 class BalanceBikeAdmin(admin.ModelAdmin):
     list_display = ('pk', 'color', 'price', 'quantity_available', 'model', 'image')
+    ordering = ('pk',)
 
 
 @admin.register(Customer)
@@ -29,12 +30,10 @@ class AddressAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'user', 'product', 'quantity','address','ordered_date', 'status')
+    list_display = ('pk', 'user', 'product', 'quantity', 'address', 'ordered_date', 'status')
     list_editable = ('status',)
     list_filter = ('status', 'ordered_date')
     list_per_page = 15
-    search_fields = ('user', 'product')
-
 
 
 @admin.register(Cart)

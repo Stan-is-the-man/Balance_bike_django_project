@@ -38,7 +38,6 @@
 
                     {% if request.user.is_authenticated %}
                         <form action="{% url 'add to cart' product_pk=bike.pk %}" method="post">
-                            {#                            <input type="hidden" name="prod_id" value="{{ bike.id }}" id="bike_id">#}
                             {% csrf_token %}
                             <button type="submit"
                                     class="btn btn-dark btn-lg btn-block h-100 d-flex align-items-center justify-content-center px-0">

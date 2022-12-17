@@ -46,7 +46,7 @@ class BalanceBike(models.Model):
         return f"Колело за баланс - {self.color} цвят"
 
     def bike_name(self):
-        return f"Колело за баланс - {self.color} цвят"
+        return f"Колело с цвят:{self.color}"
 
 
 class Customer(AbstractUser):
@@ -89,10 +89,6 @@ class Customer(AbstractUser):
         verbose_name="Телефон",
     )
 
-    @property
-    def full_name(self):
-        return f"{self.first_name} {self.last_name}"
-
 
 class Address(models.Model):
     NAME_FOR_ENGRAVING = 20
@@ -107,6 +103,7 @@ class Address(models.Model):
         Customer,
         on_delete=models.CASCADE
     )
+
     city = models.CharField(
         max_length=150,
         verbose_name="Населено място",

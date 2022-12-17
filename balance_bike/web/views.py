@@ -3,10 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView, LoginView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
-from balance_bike.web.forms import UserCreateForm, UserLoginForm, UserEditForm, AddressForm
+from balance_bike.web.forms import UserCreateForm, UserLoginForm, UserEditForm, AddressForm, EditAddressForm
 from balance_bike.web.models import BalanceBike, Cart, Address, Order
 
 UserModel = get_user_model()
@@ -17,9 +16,7 @@ class UserSignUpView(CreateView):
     form_class = UserCreateForm
     success_url = reverse_lazy('index')
 
-    # login the user automatically after registration :)
     def form_valid(self, form):
-        # If the form is valid, save the associated model and log in the user
         user = form.save()
         login(self.request, user)
         return redirect(self.success_url)
@@ -61,7 +58,6 @@ class IndexView(View):
         return render(request, 'index.html')
 
 
-@method_decorator(login_required, name='dispatch')
 class AddressView(View):
     def get(self, request):
         form = AddressForm()
@@ -92,7 +88,7 @@ class AddressView(View):
             )
             delivery_info.save()
 
-        return redirect('order summary')
+        return redirect('cart')
 
 
 @login_required
@@ -105,6 +101,25 @@ def profile(request):
     }
 
     return render(request, 'profile.html', context)
+
+
+@login_required
+def address_edit(request, id):
+    address = get_object_or_404(Address, user=request.user, id=id)
+
+    if request.method == 'POST':
+        form = EditAddressForm(request.POST, instance=address)
+        if form.is_valid():
+            form.save()
+            return redirect('order summary')
+    else:
+        form = EditAddressForm(instance=address)
+
+    context = {
+        'form': form,
+
+    }
+    return render(request, 'edit_address.html', context)
 
 
 @login_required
@@ -134,21 +149,23 @@ def add_to_cart(request, product_pk):
 def cart(request):
     user = request.user
     cart_products = Cart.objects.filter(user=user).order_by('created_at')
+
     amount = 0
     shipping_amount = 0
-    # using list comprehension to calculate total amount based on quantity and shipping
-    cp = [p for p in Cart.objects.all() if p.user == user]
-    if cp:
-        for p in cp:
-            temp_amount = (p.quantity * p.product.price)
+
+    if cart_products:
+        for product in cart_products:
+            temp_amount = (product.quantity * product.product.price)
             amount += temp_amount
 
     address = Address.objects.filter(user=user)
+    total_amount = amount + shipping_amount
+
     context = {
         'cart_products': cart_products,
         'amount': amount,
         'shipping_amount': shipping_amount,
-        'total_amount': amount + shipping_amount,
+        'total_amount': total_amount,
         'addresses': address,
     }
     return render(request, 'cart.html', context)
@@ -157,20 +174,15 @@ def cart(request):
 @login_required
 def checkout(request):
     user = request.user
-    address = Address.objects.filter(user=request.user)
-
-    # get all the products of user in the cart
-    products_in_the_cart = Cart.objects.filter(user=user).all()
+    address = Address.objects.get(user=request.user)
+    products_in_the_cart = Cart.objects.filter(user=user)
 
     for item in products_in_the_cart:
-        # moving all the products from cart to order and save them in order
-        Order(user=user, address=address[0], product=item.product, quantity=item.quantity).save()
+        Order(user=user, address=address, product=item.product, quantity=item.quantity).save()
 
-        # the available quantity (IN STOCK) decreasing !
         item.product.quantity_available -= item.quantity
         item.product.save()
 
-        # and then deleting from the cart
         item.delete()
 
     return redirect('orders')
@@ -189,10 +201,10 @@ def plus_cart(request, cart_id):
     if request.method == 'GET':
         product_in_cart = get_object_or_404(Cart, id=cart_id)
 
-        # making sure selected QTY doesn't exceed available quantity at the storage
         if product_in_cart.quantity < product_in_cart.product.quantity_available:
             product_in_cart.quantity += 1
             product_in_cart.save()
+
     return redirect('cart')
 
 
@@ -201,7 +213,6 @@ def minus_cart(request, cart_id):
     if request.method == 'GET':
         product_in_cart = get_object_or_404(Cart, id=cart_id)
 
-        # remove the bike if the quantity now is 1
         if product_in_cart.quantity == 1:
             product_in_cart.delete()
         else:
@@ -212,9 +223,13 @@ def minus_cart(request, cart_id):
 
 @login_required
 def orders(request):
+
     all_orders = Order.objects.filter(user=request.user).order_by('-ordered_date')
+    address = Address.objects.filter(user=request.user)
+
     context = {
-        'orders': all_orders
+        'orders': all_orders,
+        'address': address,
     }
     return render(request, 'orders.html', context)
 

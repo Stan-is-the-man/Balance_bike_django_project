@@ -5,7 +5,7 @@
         <div class="col-lg-10">
             <div class="card mb-4" id="headings">
 
-                <h1>Вашият профил:</h1>
+                <h2>Вашият профил</h2>
                 {% if request.user.first_name and request.user.last_name %}
                     <p><strong>Име и фамилия:</strong> {{ request.user.first_name }} {{ request.user.last_name }}</p>
                 {% endif %}
@@ -14,10 +14,10 @@
                 {% if request.user.phone %}
                     <p><strong>Телефон:</strong> {{ request.user.phone }}</p>
                 {% endif %}
-                {#            <a class="btn btn-outline-primary btn-large" href="{% url 'orders' %}">Моите поръчки »</a>#}
+
                 <a class="btn btn-outline-primary btn-large"
                    href="{% url 'user edit' pk=request.user.pk %}">Редакция</a>
-                {#            </p>#}
+
             </div>
         </div>
 
@@ -25,7 +25,8 @@
         <div class="row">
             <div class="col-lg-10">
                 <div class="card mb-4" id="headings">
-                    <div class="card-header">Адрес
+                    <div class="card-header">
+                        <h3>Информация за доставка</h3>
                         {% if not addresses %}
                             <p><a class="btn btn-primary btn-large" href="{% url 'add address' %}">Добави адрес</a>
                         {% endif %}
@@ -33,11 +34,6 @@
                     <div class="card-body">
                         {% if addresses %}
                             {% for address in addresses %}
-                                <h4 class="mb-3">Информация за доставка:</h4>
-
-                                <span class="float-right"><a href="{% url 'remove address' address.id %}"><i
-                                        class="fas fa-trash-alt small text-muted"></i></a></span>
-
                                 <p>
 
                                     <strong>Град: </strong>{{ address.city }} <br>
@@ -51,6 +47,8 @@
                                         <strong>ИМЕ за гравиране: </strong> Без име загравиране <br>
                                     {% endif %}
                                 </p>
+                                <a class="btn btn-outline-primary btn-large"
+                                   href="{% url 'edit address' id=address.id %}">Редакция</a>
 
                                 <hr>
                             {% endfor %}

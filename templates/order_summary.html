@@ -104,9 +104,9 @@
                                     <div class="card-body">
                                         {% if addresses %}
                                             {% for address in addresses %}
-                                                <span class="float-right"><a
-                                                        href="{% url 'remove address' address.id %}"><i
-                                                        class="fas fa-trash-alt small text-muted"></i></a></span>
+                                                {#                                                <span class="float-right"><a#}
+                                                {#                                                        href="{% url 'remove address' address.id %}"><i#}
+                                                {#                                                        class="fas fa-trash-alt small text-muted"></i></a></span>#}
 
                                                 <p>
 
@@ -116,9 +116,11 @@
                                                     <strong>Име на получател: </strong>{{ address.first_name }} <br>
                                                     <strong>Фамилия на получател: </strong>{{ address.last_name }} <br>
                                                     <strong>Телефон: </strong>{{ address.phone }} <br>
-                                                    <strong>ИМЕ за гравиране: </strong>{{ address.name_for_engraving }}
+                                                    <strong>Име за гравиране: </strong>{{ address.name_for_engraving }}
                                                     <br>
                                                 </p>
+                                                <a class="btn btn-outline-primary btn-large"
+                                                   href="{% url 'edit address' id=address.id %}">Редакция</a>
 
                                                 <hr>
                                             {% endfor %}
