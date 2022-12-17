@@ -29,7 +29,7 @@ class AddressAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'user', 'product', 'quantity', 'ordered_date', 'status')
+    list_display = ('pk', 'user', 'product', 'quantity','address','ordered_date', 'status')
     list_editable = ('status',)
     list_filter = ('status', 'ordered_date')
     list_per_page = 15

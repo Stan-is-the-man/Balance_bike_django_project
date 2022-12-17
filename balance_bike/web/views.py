@@ -3,10 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView, LoginView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from balance_bike.web.forms import UserCreateForm, UserLoginForm, UserEditForm, AddressForm
-from balance_bike.web.models import BalanceBike, Customer, Cart, Address, Order
+from balance_bike.web.models import BalanceBike, Cart, Address, Order
 
 UserModel = get_user_model()
 
@@ -14,7 +15,7 @@ UserModel = get_user_model()
 class UserSignUpView(CreateView):
     template_name = 'user-signup.html'
     form_class = UserCreateForm
-    success_url = reverse_lazy('catalogue')
+    success_url = reverse_lazy('index')
 
     # login the user automatically after registration :)
     def form_valid(self, form):
@@ -27,7 +28,7 @@ class UserSignUpView(CreateView):
 class UserLoginView(LoginView):
     template_name = 'user-login.html'
     form_class = UserLoginForm
-    next_page = reverse_lazy('catalogue')
+    next_page = reverse_lazy('index')
 
 
 class UserLogoutView(LogoutView):
@@ -40,13 +41,10 @@ class UserEditView(UpdateView):
     form_class = UserEditForm
     success_url = reverse_lazy('profile')
 
-    # def get_success_url(self):
-    #     return reverse_lazy('profile')
-
 
 class UserDeleteView(DeleteView):
     template_name = 'user-delete.html'
-    model = Customer
+    model = UserModel
     success_url = reverse_lazy('index')
 
 
@@ -63,6 +61,7 @@ class IndexView(View):
         return render(request, 'index.html')
 
 
+@method_decorator(login_required, name='dispatch')
 class AddressView(View):
     def get(self, request):
         form = AddressForm()
@@ -158,14 +157,14 @@ def cart(request):
 @login_required
 def checkout(request):
     user = request.user
-    address = Address.objects.all()[0]
+    address = Address.objects.filter(user=request.user)
 
     # get all the products of user in the cart
     products_in_the_cart = Cart.objects.filter(user=user).all()
 
     for item in products_in_the_cart:
-        # moving all the products from Cart to Order and save them in order
-        Order(user=user, address=address, product=item.product, quantity=item.quantity).save()
+        # moving all the products from cart to order and save them in order
+        Order(user=user, address=address[0], product=item.product, quantity=item.quantity).save()
 
         # the available quantity (IN STOCK) decreasing !
         item.product.quantity_available -= item.quantity
