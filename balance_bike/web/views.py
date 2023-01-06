@@ -148,13 +148,13 @@ def add_to_cart(request, product_pk):
 @login_required
 def cart(request):
     user = request.user
-    cart_products = Cart.objects.filter(user=user).order_by('created_at')
+    products_in_cart = Cart.objects.filter(user=user).order_by('created_at')
 
     amount = 0
     shipping_amount = 0
 
-    if cart_products:
-        for product in cart_products:
+    if products_in_cart:
+        for product in products_in_cart:
             temp_amount = (product.quantity * product.product.price)
             amount += temp_amount
 
@@ -162,7 +162,7 @@ def cart(request):
     total_amount = amount + shipping_amount
 
     context = {
-        'cart_products': cart_products,
+        'cart_products': products_in_cart,
         'amount': amount,
         'shipping_amount': shipping_amount,
         'total_amount': total_amount,
@@ -223,7 +223,6 @@ def minus_cart(request, cart_id):
 
 @login_required
 def orders(request):
-
     all_orders = Order.objects.filter(user=request.user).order_by('-ordered_date')
     address = Address.objects.filter(user=request.user)
 
